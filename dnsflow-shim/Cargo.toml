@@ -1,0 +1,14 @@
+[package]
+name = "dnsflow-shim"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+name = "dnsflow_shim"
+
+[dependencies]
+libc = "0.2"
+lazy_static = "1.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
