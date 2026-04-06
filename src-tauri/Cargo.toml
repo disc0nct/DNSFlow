@@ -1,0 +1,54 @@
+[package]
+name = "dnsflow"
+version = "0.1.0"
+description = "DNSFlow - Per-application DNS routing tool"
+authors = ["DNSFlow Contributors"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "dnsflow_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+dnsflow-common = { path = "../dnsflow-common", features = ["user"] }
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-sql = { version = "2", features = ["sqlite"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+hickory-server = "0.25"
+hickory-proto = "0.25"
+hickory-resolver = { version = "0.25", features = ["tokio"] }
+tokio = { version = "1", features = ["full"] }
+rusqlite = { version = "0.31", features = ["bundled"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Linux-only dependencies
+[target.'cfg(target_os = "linux")'.dependencies]
+procfs = "0.17"
+aya = "0.13"
+aya-log = "0.2"
+bytes = "1.5"
+libc = "0.2"
+
+# Windows-only dependencies
+[target.'cfg(target_os = "windows")'.dependencies]
+windivert = "0.7.0-beta.4"
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_System_Threading",
+    "Win32_System_ProcessStatus",
+    "Win32_NetworkManagement_IpHelper",
+    "Win32_Networking_WinSock",
+    "Win32_Security",
+    "Win32_UI_Shell",
+] }
+
