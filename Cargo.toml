@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = [
+    "src-tauri",
+    "dnsflow-common",
+    "dnsflow-shim",
+    "dnsflow-ebpf",
+    "dnsflow-hook",
+]
